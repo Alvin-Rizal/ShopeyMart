@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class CustomerResponse {
     private String name;
     private String emailCustomer;
-    private String CustomerAddress;
-    private String Phone;
+    private String customerAddress;
+    private String phone;
 }
