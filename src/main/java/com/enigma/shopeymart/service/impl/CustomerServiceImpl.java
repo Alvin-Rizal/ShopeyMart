@@ -24,21 +24,13 @@ public class CustomerServiceImpl implements CustomerService {
                 .mobilePhone(customerRequest.getMobilePhone())
                 .email(customerRequest.getEmail()).build();
         customerRepository.save(customer);
-        return CustomerResponse.builder()
-                .name(customer.getName())
-                .customerAddress(customer.getAddress())
-                .phone(customer.getMobilePhone())
-                .build();
+        return customerResponse(customer);
     }
 
     @Override
     public CustomerResponse getById(String id) {
         Customer checkCustomerExist = customerRepository.findById(id).orElseThrow(() ->new RuntimeException("Customer Not Found"));
-        return CustomerResponse.builder()
-                .name(checkCustomerExist.getName())
-                .emailCustomer(checkCustomerExist.getEmail())
-                .customerAddress(checkCustomerExist.getAddress())
-                .build();
+        return customerResponse(checkCustomerExist);
     }
 
     @Override
@@ -48,18 +40,14 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerResponse update(String id, CustomerRequest customerRequest) {
+    public CustomerResponse update(CustomerRequest customerRequest , String id) {
         Customer checkCustomerExist = customerRepository.findById(id).orElseThrow(() ->new RuntimeException("Customer Not Found"));
         checkCustomerExist.setName(customerRequest.getName());
         checkCustomerExist.setMobilePhone(customerRequest.getMobilePhone());
         checkCustomerExist.setEmail(customerRequest.getEmail());
         checkCustomerExist.setAddress(customerRequest.getAddress());
         customerRepository.save(checkCustomerExist);
-        return CustomerResponse.builder()
-                .name(checkCustomerExist.getName())
-                .emailCustomer(checkCustomerExist.getEmail())
-                .phone(checkCustomerExist.getMobilePhone())
-                .build();
+        return customerResponse(checkCustomerExist);
     }
 
     @Override
