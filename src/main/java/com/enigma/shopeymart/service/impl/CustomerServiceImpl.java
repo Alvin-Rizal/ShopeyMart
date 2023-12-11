@@ -54,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void delete(String id) {
         if(customerRepository.existsById(id)) {
             customerRepository.deleteById(id);
-        }else throw new RuntimeException("ID not Exixt, Cant Delete");
+        }else throw new RuntimeException("ID not Exist, Cant Delete");
 
     }
 

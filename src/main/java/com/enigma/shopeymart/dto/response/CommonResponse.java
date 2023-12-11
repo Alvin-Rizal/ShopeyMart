@@ -1,18 +1,16 @@
 package com.enigma.shopeymart.dto.response;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder(toBuilder = true)
-public class CustomerResponse {
-    private String name;
-    private String emailCustomer;
-    private String customerAddress;
-//    private String phone;
+public class CommonResponse<T> {
+    private Integer statusCode;
+    private String message;
+    private T data;
 }
