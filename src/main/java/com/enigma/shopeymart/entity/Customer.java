@@ -27,6 +27,10 @@ public class Customer {
     @Column(name = "mobile_phone",unique = true,nullable = false,length = 30)
     private String mobilePhone;
 
+    @OneToOne
+    @JoinColumn(name = "user_credential_id")
+    private UserCredential userCredential;
+
     //id
     //name
     //address

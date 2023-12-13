@@ -115,6 +115,7 @@ public class ProductServiceImpl implements ProductService {
             Join<Product, ProductPrice> productPrices = root.join("productPrices");
 
             //Predicate digunakan untuk menggunakan Like dimana nanti kita akan menggunakan kondisi pencarian paramater
+
             //Disini kita akan mencari mana product atau harga yang sama atau harga dibwahnya, makannya menggunkan lessThanOrEqualsTo
             List<Predicate> predicates = new ArrayList<>();
             if (name != null) {

@@ -17,6 +17,15 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
 
     @Override
+    public CustomerResponse createNewCustomerResponse(Customer request) {
+        Customer customer = customerRepository.saveAndFlush(request);
+        return CustomerResponse.builder()
+                .id(customer.getId())
+                .name(customer.getName())
+                .build();
+    }
+
+    @Override
     public CustomerResponse create(CustomerRequest customerRequest) {
         Customer customer = Customer.builder()
                 .name(customerRequest.getName())
@@ -25,6 +34,11 @@ public class CustomerServiceImpl implements CustomerService {
                 .email(customerRequest.getEmail()).build();
         customerRepository.save(customer);
         return customerResponse(customer);
+    }
+
+    @Override
+    public Customer createNewCustomer(Customer customer) {
+        return customerRepository.save(customer);
     }
 
     @Override
