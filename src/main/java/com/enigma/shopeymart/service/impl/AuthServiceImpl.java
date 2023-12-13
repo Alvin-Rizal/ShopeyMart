@@ -31,21 +31,29 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public RegisterResponse registerCustomer(AuthRequest request) {
         try {
-            //ToDo: 1. Set Credential
-            UserCredential userCredential = UserCredential.builder()
-                    .username(request.getUsername())
-                    .password(request.getPassword()).build();
-            userCredentialRepository.saveAndFlush(userCredential);
-            //ToDo 2.Set Role
+            //ToDo 1.Set Role
             Role role = Role.builder()
                     .name(ERole.ROLE_CUSTOMER)
                     .build();
-            roleService.getOrSave(role);
+            Role roleSaved = roleService.getOrSave(role);
+            //ToDo: 2. Set Credential
+            UserCredential userCredential = UserCredential.builder()
+                    .username(request.getUsername())
+                    .password(request.getPassword())
+                    .role(roleSaved)
+                    .build();
+            userCredentialRepository.saveAndFlush(userCredential);
+
             //ToDo 3.Set Customer
             Customer customer = Customer.builder()
                     .userCredential(userCredential)
+                    .address(request.getAddress())
+                    .name(request.getName())
+                    .mobilePhone(request.getPhone())
+                    .email(request.getEmail())
                     .build();
-            customerService.createNewCustomer(customer);
+            customerService.createNewCustomerResponse(customer);
+//            customerService.createNewCustomer(customer);
 
             return RegisterResponse.builder()
                     .username(userCredential.getUsername())

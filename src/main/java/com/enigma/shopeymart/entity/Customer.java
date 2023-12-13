@@ -8,7 +8,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "m_customer")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder(toBuilder = true)
 public class Customer {
     @Id
