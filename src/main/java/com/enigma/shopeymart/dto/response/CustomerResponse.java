@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 public class CustomerResponse {
+    private String id;
     private String name;
     private String emailCustomer;
     private String customerAddress;

@@ -29,9 +29,17 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponse getById(String id) {
-        Customer checkCustomerExist = customerRepository.findById(id).orElseThrow(() ->new RuntimeException("Customer Not Found"));
-        return customerResponse(checkCustomerExist);
-    }
+            Customer customer = customerRepository.findById(id).orElse(null);
+            if (customer != null) {
+                return CustomerResponse.builder()
+                        .id(customer.getId())
+                        .name(customer.getName())
+                        .emailCustomer(customer.getEmail())
+                        .customerAddress(customer.getAddress())
+                        .build();
+            }
+            return null;
+        }
 
     @Override
     public List<CustomerResponse> getAll() {

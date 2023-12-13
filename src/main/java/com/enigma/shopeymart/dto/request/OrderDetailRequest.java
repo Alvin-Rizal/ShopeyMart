@@ -1,4 +1,4 @@
-package com.enigma.shopeymart.dto.response;
+package com.enigma.shopeymart.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-public class StoreResponse {
-    private String id;
-    private String noSiup;
-    private String storeName;
+public class OrderDetailRequest {
+    private String productPriceId;
+    private Integer quantity;
 }

@@ -7,11 +7,13 @@ import com.enigma.shopeymart.entity.Store;
 import java.util.List;
 
 public interface StoreService {
-    Store create(Store store);
-    Store getByID(String id);
-    List<Store> getAll();
-    Store update(Store store);
+    List<StoreResponse> getAll();
+
+    StoreResponse update(StoreRequest storeRequest);
+
     void delete(String id);
+
+    StoreResponse getById(String id);
 
     StoreResponse create(StoreRequest storeRequest);
 }

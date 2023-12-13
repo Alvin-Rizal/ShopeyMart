@@ -13,14 +13,9 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class ProductResponse {
     private String productId;
-    @NotBlank(message = "product name is required")
     private String productName;
-    @NotBlank(message = "product description is required")
     private String description;
-    @NotBlank(message = "product price is required")
     private Long price;
-    @NotBlank(message = "product stock is required")
     private Integer stock;
-    @NotBlank(message = "Id Store is required")
-    private Store store;
+    private StoreResponse store;
 }

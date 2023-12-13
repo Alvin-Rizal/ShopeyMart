@@ -9,47 +9,29 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class StoreServiceImpl implements StoreService {
-
-    //keyword final harus dibuatkan agar bean dapat dibuatkan dan data tidak null.
     private final StoreRepository storeRepository;
-    @Override
-    public Store create(Store store) {
-        return storeRepository.save(store);
-    }
 
     @Override
-    public Store getByID(String id) {
-        return storeRepository.findById(id).orElse(null);
-    }
+    public List<StoreResponse> getAll() {
 
-    @Override
-    public List<Store> getAll() {
-        return storeRepository.findAll();
-    }
+        List<Store> stores = storeRepository.findAll();
 
-    @Override
-    public Store update(Store store) {
-        Store currentStoreId = getByID(store.getId());
-        if(currentStoreId!= null){
-        return storeRepository.save(store);
-        }
-        return null;
-    }
+        // Mengonversi daftar Store menjadi daftar StoreResponse
+        List<StoreResponse> storeResponses = stores.stream()
+                .map(store -> StoreResponse.builder()
+                        .id(store.getId())
+                        .storeName(store.getName())
+                        .noSiup(store.getNoSiup())
+                        .build())
+                .collect(Collectors.toList());
 
-    @Override
-    public void delete(String id) {
-        storeRepository.deleteById(id);
+        return storeResponses;
 
-    }
-    //Program Contoh Untuk Soft Delete, rubah variable setName menjadi setIsActive
-    public void softDelete(String id) {
-        Store store = this.getByID(id);
-        store.setName("0");
-        storeRepository.save(store);
     }
 
     @Override
@@ -64,8 +46,50 @@ public class StoreServiceImpl implements StoreService {
         return StoreResponse.builder()
                 .storeName(store.getName())
                 .noSiup(store.getNoSiup())
-                .Phone(store.getMobilePhone())
-                .build(); //menyiapkan tempat mapping
+                .build();
+    }
+    @Override
+    public StoreResponse update(StoreRequest storeRequest) {
+        Store store = storeRepository.findById(storeRequest.getId()).orElse(null);
 
+        if (store != null) {
+            store.setName(storeRequest.getName());
+            store.setNoSiup(storeRequest.getNoSiup());
+            store.setAddress(storeRequest.getAddress());
+            store.setMobilePhone(storeRequest.getMobilePhone());
+
+            storeRepository.save(store);
+
+            return StoreResponse.builder()
+                    .id(store.getId())
+                    .storeName(store.getName())
+                    .noSiup(store.getNoSiup())
+                    .build();
+        }
+        return null;
+    }
+
+    @Override
+    public void delete(String id) {
+        Store store = storeRepository.findById(id).orElse(null);
+        if (store != null) {
+            storeRepository.deleteById(id);
+            System.out.println("delete succed");
+        } else {
+            System.out.println("id not found");
+        }
+    }
+
+    @Override
+    public StoreResponse getById(String id) {
+        Store store = storeRepository.findById(id).orElse(null);
+        if (store != null) {
+            return StoreResponse.builder()
+                    .id(store.getId())
+                    .storeName(store.getName())
+                    .noSiup(store.getNoSiup())
+                    .build();
+        }
+        return null;
     }
 }
