@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.enigma.shopeymart.entity.AppUser;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -18,15 +19,19 @@ import java.util.Map;
 @Component
 public class JwtUtil {
     //Generate token and Get Data by Username dan validation . Digunakan pada Payload
-    private final String jwtSecret = "MyWaifuIs";
-    private final String appName = "Shopeymart";
+    @Value("${app.shopeymart.jwt.jwt-secret}")
+    private String jwtSecret;
+    @Value("${app.shopeymart.jwt.app-name}")
+    private String appName;
+    @Value("${app.shopeymart.jwt.jwtExpirationInSecond}")
+    private long jwtExpirationInSecond;
     public String generateToken(AppUser appUser) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(jwtSecret.getBytes(StandardCharsets.UTF_8));
             String token = JWT.create()
                     .withIssuer(appName) //info untuk application name
                     .withSubject(appUser.getId())
-                    .withExpiresAt(Instant.now().plusSeconds(36000))
+                    .withExpiresAt(Instant.now().plusSeconds(jwtExpirationInSecond))
                     .withIssuedAt(Instant.now())
                     .withClaim("app",appUser.getRole().name())
                     .sign(algorithm);
