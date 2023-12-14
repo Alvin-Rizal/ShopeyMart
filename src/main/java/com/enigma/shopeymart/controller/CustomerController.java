@@ -20,7 +20,7 @@ public class CustomerController {
     public CustomerResponse createCustomer(@RequestBody CustomerRequest customerRequest) {
         return customerService.create(customerRequest);
     }
-    @GetMapping
+    @GetMapping(value = "/get")
     public List<CustomerResponse> getAll(){
         return customerService.getAll();
     }

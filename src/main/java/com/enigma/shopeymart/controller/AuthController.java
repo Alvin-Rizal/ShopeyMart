@@ -1,19 +1,19 @@
 package com.enigma.shopeymart.controller;
 
+import com.enigma.shopeymart.constant.AppPath;
 import com.enigma.shopeymart.dto.request.AuthRequest;
+import com.enigma.shopeymart.dto.response.LoginResponse;
 import com.enigma.shopeymart.dto.response.RegisterResponse;
 import com.enigma.shopeymart.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @ResponseBody
 //Rest Controller merangkup @Controller dan @ResponseBody
 @RequiredArgsConstructor
+@RequestMapping(AppPath.AUTH)
 public class AuthController {
     private final AuthService authService;
 
@@ -21,4 +21,9 @@ public class AuthController {
     public RegisterResponse response(@RequestBody AuthRequest authRequest) {
         return authService.registerCustomer(authRequest);
     }
+    @PostMapping("/login")
+    public LoginResponse login(@RequestBody AuthRequest authRequest) {
+        return authService.login(authRequest);
+    }
+
 }

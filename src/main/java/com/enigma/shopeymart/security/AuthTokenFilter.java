@@ -28,16 +28,17 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try{
             //Validasi Token JWT
-            String headerAuth = request.getHeader("Autorization");
+            String headerAuth = request.getHeader("Authorization");
             String token = null;
             if (headerAuth !=null && headerAuth.startsWith("Bearer ")){
                 token = headerAuth.substring(7);
+
             }
             if(token !=null && jwtUtil.verifyJwtToken(token)) {
                 //set auth ke spring security
                 Map<String,String> userInfo = jwtUtil.getUserInfoByToken(token);
                 UserDetails user = userService.loadUserByUserId(userInfo.get("userId"));
-
+                System.out.println("terverify");
                 //Validasi Token
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user,null,user.getAuthorities());
 

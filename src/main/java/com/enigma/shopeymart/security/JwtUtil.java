@@ -18,15 +18,15 @@ import java.util.Map;
 @Component
 public class JwtUtil {
     //Generate token and Get Data by Username dan validation . Digunakan pada Payload
-    private final String jwtSecret = "MyWaifuIs........";
-    private final String appName = "Shopey Mart";
+    private final String jwtSecret = "MyWaifuIs";
+    private final String appName = "Shopeymart";
     public String generateToken(AppUser appUser) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(jwtSecret.getBytes(StandardCharsets.UTF_8));
             String token = JWT.create()
                     .withIssuer(appName) //info untuk application name
                     .withSubject(appUser.getId())
-                    .withExpiresAt(Instant.now().plusSeconds(60))
+                    .withExpiresAt(Instant.now().plusSeconds(36000))
                     .withIssuedAt(Instant.now())
                     .withClaim("app",appUser.getRole().name())
                     .sign(algorithm);
@@ -52,7 +52,7 @@ public class JwtUtil {
             DecodedJWT decodedJWT = verifier.verify(token);
 
             Map<String,String> userInfo = new HashMap<>();
-            userInfo.put("user_id",decodedJWT.getSubject());
+            userInfo.put("userId",decodedJWT.getSubject());
             userInfo.put("role",decodedJWT.getClaim("role").asString());
             return userInfo;
         }catch (JWTVerificationException e) {
