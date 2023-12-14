@@ -6,6 +6,7 @@ import com.enigma.shopeymart.dto.response.LoginResponse;
 import com.enigma.shopeymart.dto.response.RegisterResponse;
 import com.enigma.shopeymart.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,10 @@ public class AuthController {
     @PostMapping("/login")
     public LoginResponse login(@RequestBody AuthRequest authRequest) {
         return authService.login(authRequest);
+    }
+    @PostMapping("/admin")
+    public RegisterResponse responseAdmin(@RequestBody AuthRequest authRequest) {
+        return authService.registerAdmin(authRequest);
     }
 
 }

@@ -15,7 +15,7 @@ public class UserCredential {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-   // @Column(name = "username",nullable = false,length = 50)
+    @Column(name = "username",unique = true,nullable = false,length = 50)
     private String username;
 
     //@Column(name = "password",nullable = false,length = 60)

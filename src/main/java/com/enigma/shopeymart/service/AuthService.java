@@ -7,4 +7,6 @@ import com.enigma.shopeymart.dto.response.RegisterResponse;
 public interface AuthService {
     RegisterResponse registerCustomer(AuthRequest request);
     LoginResponse login(AuthRequest authRequest);
+
+    RegisterResponse registerAdmin(AuthRequest authRequest);
 }
