@@ -7,6 +7,7 @@ import com.enigma.shopeymart.entity.Customer;
 import com.enigma.shopeymart.entity.Store;
 import com.enigma.shopeymart.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class CustomerController {
         return customerService.update(customerRequest,id);
     }
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteCustomer(@PathVariable String id) {
         customerService.delete(id);
     }

@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class StoreServiceImpl implements StoreService {
+
     private final StoreRepository storeRepository;
 
     @Override
@@ -79,6 +80,7 @@ public class StoreServiceImpl implements StoreService {
             System.out.println("id not found");
         }
     }
+
 
     @Override
     public StoreResponse getById(String id) {
