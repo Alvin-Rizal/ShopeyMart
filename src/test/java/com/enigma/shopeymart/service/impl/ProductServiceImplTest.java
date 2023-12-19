@@ -53,6 +53,8 @@ class ProductServiceImplTest {
         //compare product name dan product desc dengan data yang di save
         when(dummyProductRequest.getProductName()).thenReturn(saveProduct.getName());
         when(dummyProductRequest.getDescription()).thenReturn(saveProduct.getDescription());
+        when(dummyProductRequest.getProductId()).thenReturn(saveProduct.getId());
+        when(dummyProductRequest.getStoreId()).thenReturn(dummyStore);
 
         ProductResponse productResponse = productService.createProductAndProductPrice(dummyProductRequest);
 

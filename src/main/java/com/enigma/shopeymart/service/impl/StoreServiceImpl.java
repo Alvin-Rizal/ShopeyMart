@@ -85,13 +85,11 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public StoreResponse getById(String id) {
         Store store = storeRepository.findById(id).orElse(null);
-        if (store != null) {
+        assert store != null;
             return StoreResponse.builder()
                     .id(store.getId())
                     .storeName(store.getName())
                     .noSiup(store.getNoSiup())
                     .build();
         }
-        return null;
-    }
 }

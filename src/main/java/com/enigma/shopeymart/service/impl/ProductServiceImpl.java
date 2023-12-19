@@ -64,6 +64,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    @Transactional(rollbackOn = Exception.class)
     @Override
     public ProductResponse createProductAndProductPrice(ProductRequest productRequest) {
         StoreResponse storeResponse = storeService.getById(productRequest.getStoreId().getId());
