@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -20,8 +22,18 @@ public class PostService {
     private final RestTemplate restTemplate;
     private final PostRepository postRepository;
 
-    public ResponseEntity<String> getAllPost(){
-        return responseMethod(restTemplate.getForEntity(BASE_URL,String.class),"Failed to Load Data");
+    public ResponseEntity<List<Posts>> getAllPost(){
+        //Ambil post dari RestApi
+        ResponseEntity<Posts[]> apiResponse = restTemplate.getForEntity(BASE_URL, Posts[].class);
+        List<Posts> externalPosts = List.of(apiResponse.getBody());
+
+        //Ambil Post dari Local database
+        List<Posts> dbPost = postRepository.findAll();
+
+        //Gabungin post db dan api rest
+        dbPost.addAll(externalPosts);
+
+        return ResponseEntity.ok(dbPost);
     }
 
     public ResponseEntity<String> getPostById(Long id){
@@ -51,4 +63,5 @@ public class PostService {
         //response
         return responseMethod(restTemplate.postForEntity(BASE_URL,requestEntity,String.class),"Failed to Create data");
     }
+
 }

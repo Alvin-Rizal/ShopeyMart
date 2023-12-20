@@ -7,6 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/posts")
@@ -15,7 +17,7 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getAllPosts() {
+    public ResponseEntity<List<Posts>> getAllPosts() {
         return postService.getAllPost();
     }
 
