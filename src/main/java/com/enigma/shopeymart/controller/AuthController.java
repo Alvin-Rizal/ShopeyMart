@@ -19,14 +19,17 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
+    @CrossOrigin(origins = "http://localhost:5173")
     public RegisterResponse response(@RequestBody AuthRequest authRequest) {
         return authService.registerCustomer(authRequest);
     }
     @PostMapping("/login")
+    @CrossOrigin(origins = "http://localhost:5173")
     public LoginResponse login(@RequestBody AuthRequest authRequest) {
         return authService.login(authRequest);
     }
     @PostMapping("/admin")
+    @CrossOrigin(origins = "http://localhost:5173")
     public RegisterResponse responseAdmin(@RequestBody AuthRequest authRequest) {
         return authService.registerAdmin(authRequest);
     }

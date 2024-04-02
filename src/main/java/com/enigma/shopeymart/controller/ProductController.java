@@ -23,7 +23,7 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     //Untuk mengasi Autorisasi apa saja yang bisa dilakukan oleh admin.
     public ResponseEntity<?> createProduct(@RequestBody ProductRequest productRequest) {
         ProductResponse productResponse = productService.createProductAndProductPrice(productRequest);
